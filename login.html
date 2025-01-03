@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Panel</title>
+  <style>
+    /* Reset de márgenes y tamaño */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Fondo RGB animado */
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
+      background-size: 300% 300%;
+      animation: rgbBackground 6s infinite;
+    }
+
+    @keyframes rgbBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Caja de login */
+    .login-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      color: white;
+      width: 300px;
+      display: none; /* Oculta el login inicialmente */
+    }
+
+    .login-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .login-box input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .login-box button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: linear-gradient(90deg, #ff7b00, #ff007b);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-box button:hover {
+      background: linear-gradient(90deg, #ff007b, #ff7b00);
+    }
+
+    /* Anuncio emergente */
+    .popup {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: black;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      animation: fireEffect 2s infinite alternate;
+    }
+
+    @keyframes fireEffect {
+      0% { box-shadow: 0 0 15px #ff0000; }
+      100% { box-shadow: 0 0 25px #ff6600; }
+    }
+
+    /* Botón para cerrar el anuncio */
+    .popup .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .popup .close-btn:hover {
+      color: #ff6600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Anuncio emergente -->
+  <div class="popup" id="popup">
+    <button class="close-btn" id="closePopup">&times;</button>
+    <h2>🔥 Volvimos Perras! 🔥</h2>
+  </div>
+
+  <!-- Caja de login -->
+  <div class="login-box" id="loginBox">
+    <h2>CyberX</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username de Telegram" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <script>
+    // Elementos del DOM
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+    const loginBox = document.getElementById('loginBox');
+
+    // Cerrar el popup al hacer clic en la "X"
+    closePopup.addEventListener('click', () => {
+      popup.style.display = 'none'; // Oculta el popup
+      loginBox.style.display = 'block'; // Muestra el login
+    });
+
+    // Validación del formulario
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (username === '' || password === '') {
+        alert('Todos los campos son obligatorios.');
+        return;
+      }
+
+      if (password.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
+
+      window.location.href = 'panel.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reembolsos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #007bff;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 1rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .form-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #007bff;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group button {
+      width: calc(50% - 10px);
+      padding: 0.7rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .form-group .send-btn {
+      background: #007bff;
+      color: white;
+      margin-right: 10px;
+    }
+
+    .form-group .send-btn:hover {
+      background: #0056b3;
+    }
+
+    .form-group .clear-btn {
+      background: #dc3545;
+      color: white;
+    }
+
+    .form-group .clear-btn:hover {
+      background: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <a href="panel.html">Panel</a>
+    <a href="reembolsos.html">Reembolsos</a>
+    <a href="compras.html">Compras</a>
+    <a href="servicios.html">Servicios</a>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="container">
+    <div class="form-box">
+      <h2>Solicitar Reembolso</h2>
+      <form id="refundForm">
+        <div class="form-group">
+          <label for="pageName">Nombre de la Página (Ej. Amazon):</label>
+          <input type="text" id="pageName" required>
+        </div>
+        <div class="form-group">
+          <label for="productLink">Link del Producto:</label>
+          <input type="url" id="productLink" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo de la Cuenta:</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña de la Cuenta:</label>
+          <input type="password" id="password" required>
+        </div>
+        <div class="form-group">
+          <label for="telegramUsername">@Username de Telegram:</label>
+          <input type="text" id="telegramUsername" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="send-btn">ENVIAR</button>
+          <button type="button" class="clear-btn" id="clearForm">CLEAR</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Botón "Clear" para borrar los campos
+    document.getElementById('clearForm').addEventListener('click', () => {
+      document.getElementById('refundForm').reset();
+    });
+
+    // Enviar formulario
+    document.getElementById('refundForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Obtener los datos del formulario
+      const pageName = document.getElementById('pageName').value;
+      const productLink = document.getElementById('productLink').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const telegramUsername = document.getElementById('telegramUsername').value;
+      const originPage = "reembolsos.html";
+
+      // Crear un objeto con los datos
+      const pedido = {
+        id: Date.now(), // Usar la fecha como ID único
+        pageName: pageName,
+        productLink: productLink,
+        email: email,
+        password: password,
+        telegramUsername: telegramUsername,
+        originPage,
+        status: 'pending' // El estado inicial es 'pending'
+      };
+
+      // Guardar el pedido en localStorage
+      const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+      pedidos.push(pedido);
+      localStorage.setItem('pedidos', JSON.stringify(pedidos));
+
+      // Redirigir al usuario a una página de éxito o confirmación
+      window.location.href = "pedidoexito.html"; 
+    });
+  </script>
+</body>
+</html>
+
